@@ -1,6 +1,7 @@
 package com.lenkee.app;
 
-import java.util.NoSuchElementException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 /**
@@ -15,44 +16,57 @@ public class 逃离大迷宫 {
      来源：力扣（LeetCode）
      链接：https://leetcode-cn.com/problems/escape-a-large-maze
      */
-    private static final int scope = 100000; // 地图长宽
-    public static Stack<int[]> trace = new Stack<>();
-    public static void main(String[] args) {
-        int[][] blocked = {{0,2},{1,0},{1,3},{2,1},{2,3},{1,0},{1,0},{3,0}};
-        int[][] graph = dealData(blocked);
-        int[] source = new int[]{0,0};
-        int[] target = new int[]{2,4};
 
-        System.out.println(isEscapePossible2(graph, source, target));
+    public static void main(String[] args) {
+        int[][] blocked = {{10,9},{9,10},{10,11},{11,10}};
+
+        int[] source = new int[]{0,0};
+        int[] target = new int[]{10,10};
+
+        System.out.println("^ v ^");
+        System.out.println(isEscapePossible(blocked, source, target) );
 
     }
 
 
-    public static int[][] dealData(int[][]blocked){
-        int[][] graph = new int[scope][scope];
+    public static Map<String, Integer> dealData(int[][]blocked){
+        Map<String, Integer> graph= new HashMap<>();
         for (int i = 0; i < blocked.length; i++) {
             int x = blocked[i][0];
             int y = blocked[i][1];
-            graph[x][y] = 1;
+            String key = x+""+y;
+            graph.put(key,1);
         }
         return graph;
     }
 
-    public static boolean outOfScope(int x, int y, int[][] blocked){
-        return x>=0 && y>=0 && x<blocked.length && y<blocked[0].length && blocked[x][y]==0;
+    public static boolean outOfScope(int x, int y,Map<String, Integer> graph){
+        int scope = 1000000;
+        return x>=0 && y>=0 && x<scope && y<scope && getGraph(graph,x+""+y)==0;
     }
 
-    public static boolean isEscapePossible2(int[][] graph, int[] source, int[] target){
+    public static boolean isEscapePossible(int[][] blocked, int[] source, int[] target){
+        Stack<int[]> trace = new Stack<>();
+        Stack<int[]> trace2 = new Stack<>();
+        return isEscapePossible2(blocked, source, target, trace) && isEscapePossible2(blocked, target, source, trace2);
+    }
+
+    public static boolean isEscapePossible2(int[][] blocked, int[] source, int[] target, Stack<int[]> trace){
+        Map<String, Integer> graph = dealData(blocked);
         // 上下左右轮询，一直到taget和source是同一个点为止
         trace.add(source.clone());
         while (true){
             int x = source[0];
             int y = source[1];
-            System.out.print(x+" "+y+"-->");
+//            System.out.print(x+" "+y+"-->");
             // 出口
             if (x == target[0] && y==target[1]){
+                System.out.println();
+                System.out.println();
                 return true;
             }
+            if (trace != null && trace.size() > 19900)
+                return true;
             // 上
             if (goAhead(graph,source, 1)){
                 // 移动成功，将路径加入到stack里面, 移动source
@@ -88,14 +102,14 @@ public class 逃离大迷宫 {
     }
 
     // 如果能走，则走到下一步，返回true，否则返回false
-    public static boolean goAhead(int[][]graph,int[]source, int director){
+    public static boolean goAhead(Map<String, Integer> graph,int[]source, int director){
         // 1.上 2.下 3.左 4.右
         int x = source[0];
         int y = source[1];
         switch (director){
             case 1:{
                 if (outOfScope(x-1, y,graph)){
-                    graph[x][y] = 1;
+                    blockGraph(graph,source,1);
                     source[0] = x-1;
                     source[1] = y;
                     return true;
@@ -104,7 +118,7 @@ public class 逃离大迷宫 {
             }
             case 2:{
                 if (outOfScope(x+1, y,graph)){
-                    graph[x][y] = 1;
+                    blockGraph(graph,source,1);
                     source[0] = x+1;
                     source[1] = y;
                     return true;
@@ -113,7 +127,7 @@ public class 逃离大迷宫 {
             }
             case 3:{
                 if (outOfScope(x, y-1,graph)){
-                    graph[x][y] = 1;
+                    blockGraph(graph,source,1);
                     source[0] = x;
                     source[1] = y-1;
                     return true;
@@ -122,7 +136,7 @@ public class 逃离大迷宫 {
             }
             case 4:{
                 if (outOfScope(x, y+1,graph)){
-                    graph[x][y] = 1;
+                    blockGraph(graph,source,1);
                     source[0] = x;
                     source[1] = y+1;
                     return true;
@@ -134,15 +148,31 @@ public class 逃离大迷宫 {
     }
 
     // 返回source位置
-    public static int[] rollBack(Stack<int[]> stack, int[][]graph){
+    public static int[] rollBack(Stack<int[]> stack, Map<String, Integer> graph){
         try {
             int[] pop = stack.pop();
             int x = pop[0];
             int y = pop[1];
-            graph[x][y] = 1;
+            blockGraph(graph,pop,1);
             return stack.lastElement();
-        }catch (NoSuchElementException e){
+        }catch (Exception e){
             return null;
         }
+    }
+    // 打开该图格子0，或block该格子1
+    public static void blockGraph(Map<String, Integer> graph, int[] position, int action){
+        String key = position[0] +""+ position[1];
+        if (action == 0){
+            graph.put(key,0);
+        }
+        else {
+            graph.put(key,1);
+        }
+    }
+    public static int getGraph(Map<String, Integer> graph, String key){
+        Integer integer = graph.get(key);
+        if (integer != null)
+            return integer;
+        else return 0;
     }
 }
