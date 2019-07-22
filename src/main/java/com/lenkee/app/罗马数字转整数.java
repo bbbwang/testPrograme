@@ -2,6 +2,9 @@ package com.lenkee.app;
 
 import org.testng.annotations.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * 给定一个罗马数字，将其转换成整数。输入确保在 1 到 3999 的范围内。
 
@@ -35,8 +38,11 @@ public class 罗马数字转整数 {
     public  final String values[] = {"I","V","X","L","C","D","M"};
     public  final int num[] = {1,5,10,50,100,500,1000};
 
+    public static void main(String[] args) {
+        System.out.println(deduplication("11,332,,3f,2,3f,,22,11,23"));
+    }
     @Test
-    public  void main() {
+    public   void main() {
 
         String roman = "IV";
         int total = 0;
@@ -79,6 +85,25 @@ public class 罗马数字转整数 {
                 return 1;
         }
         throw  new RuntimeException("符号不符合规范...");
+    }
+
+    private static String deduplication(String ticket){
+        if (ticket != null && !"".equals(ticket)){
+            String[] array = ticket.split(",");
+            Set<String> set = new HashSet<>();
+            for(int i=0;i<array.length;i++){
+                set.add(array[i]);
+            }
+            String[] arrayResult = (String[]) set.toArray(new String[set.size()]);
+            String result = "";
+            for (int i = 0; i < arrayResult.length; i++) {
+                result += arrayResult[i]+",";
+            }
+            if (result.endsWith(","))
+                result = result.substring(0,result.length()-1);
+            return result;
+        }
+        return ticket;
     }
 }
 
