@@ -1,4 +1,4 @@
-package com.lenkee.app;
+package com.lenkee.intersting;
 
 import java.util.ArrayList;
 import java.util.List;

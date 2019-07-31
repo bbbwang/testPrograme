@@ -43,7 +43,7 @@ public class ControllerTest {
 
         Font font = workbook.createFont();
         font.setColor(HSSFColor.RED.index);
-//        font.setBold(true);
+        font.setBoldweight((short) 22);
         cellStyle.setFont(font);
 
         // 将第一行的三个单元格给合并
