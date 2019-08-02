@@ -1,6 +1,5 @@
 package com.lenkee.app;
 
-import com.lenkee.controller.ControllerTest;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
@@ -123,13 +122,6 @@ public class ExcelUtils {
     }
 
 
-    /*
-     *javaweb导入导出excel
-      */
-    public static void webExcell() throws Exception {
-        ControllerTest controller = new ControllerTest();
-        controller.exportExcel(null, null, null);
-    }
 
 
 
