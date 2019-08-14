@@ -9,12 +9,15 @@ import java.util.stream.Collectors;
  */
 public class StringTest {
     public static void main(String[] args) throws UnsupportedEncodingException {
-        String str = "11,2,33, 44, 555,$$,$11,$2,$333,$5,$,";
-        String now = "22,33,43,54,$$,$,13,$333";
-        //System.out.println(deduplication(str));
-        List<String> list = removedTickets(str, now);
-        // 输出所有list
-        System.out.println(Arrays.toString(list.toArray()));
+//        String str = "11,2,33, 44, 555,$$,$11,$2,$333,$5,$,";
+//        String now = "22,33,43,54,$$,$,13,$333";
+//        //System.out.println(deduplication(str));
+//        List<String> list = removedTickets(str, now);
+//        // 输出所有list
+//        System.out.println(Arrays.toString(list.toArray()));
+        for (int i = 0; i < 100; i++) {
+            System.out.println((int)(1+Math.random()*(5-1+1)));
+        }
 
     }
 
