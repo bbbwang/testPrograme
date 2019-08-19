@@ -15,9 +15,8 @@ public class StringTest {
 //        List<String> list = removedTickets(str, now);
 //        // 输出所有list
 //        System.out.println(Arrays.toString(list.toArray()));
-        for (int i = 0; i < 100; i++) {
-            System.out.println((int)(1+Math.random()*(5-1+1)));
-        }
+        String url = "https://github.corp.ebay.com/localization/pseudo-service";
+        System.out.println(httpsToSsh(url));
 
     }
 
@@ -108,6 +107,18 @@ public class StringTest {
             return result;
         }
         return ticket;
+    }
+
+    public static String httpsToSsh(String url){
+        String baseUrl = "github.corp.ebay.com";
+        try{
+            String[] split = url.split(baseUrl+"/");
+            String content = split[split.length-1];
+            return "git@"+baseUrl+":"+content+".git";
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
 

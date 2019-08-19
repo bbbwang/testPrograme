@@ -5,7 +5,7 @@ package com.lenkee.intersting;
  */
 public class 链表反向 {
     /**
-     * 这是我刚毕业时遇到的面试题，如何把链表反向，
+     * 这是我刚毕业时遇到的面试题，如何把链表反向，且空间复杂度为1
      * 当时口头回答都挺好，可是编码能力不行，不能用代码实现
      */
     public static final int scope = 20;
