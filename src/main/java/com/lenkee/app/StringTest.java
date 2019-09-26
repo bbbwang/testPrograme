@@ -25,6 +25,7 @@ public class StringTest {
         System.out.println(new Date());
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println(format1.format(new Date()));
+        System.out.println("111111");
 
     }
 
