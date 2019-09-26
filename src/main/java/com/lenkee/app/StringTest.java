@@ -1,6 +1,10 @@
 package com.lenkee.app;
 
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -15,8 +19,12 @@ public class StringTest {
 //        List<String> list = removedTickets(str, now);
 //        // 输出所有list
 //        System.out.println(Arrays.toString(list.toArray()));
-        String url = "https://github.corp.ebay.com/localization/pseudo-service";
-        System.out.println(httpsToSsh(url));
+//        String url = "https://github.corp.ebay.com/localization/pseudo-service";
+//        System.out.println(httpsToSsh(url));
+        DateFormat iso8601DateFormat = new ISO8601DateFormat();
+        System.out.println(new Date());
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println(format1.format(new Date()));
 
     }
 
