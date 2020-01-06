@@ -9,8 +9,9 @@ public class MD5 {
     // 全局数组
     private final static String[] strDigits = { "0", "1", "2", "3", "4", "5",
             "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
-
-    public MD5() {
+    private static MD5 md5 = new MD5();
+    public static MD5 MD5() {
+        return md5;
     }
 
     // 返回形式为数字跟字符串
@@ -44,7 +45,7 @@ public class MD5 {
         return sBuffer.toString();
     }
 
-    public static String GetMD5Code(String strObj) {
+    private String GetMD5Code(String strObj) {
         String resultString = null;
         try {
             resultString = new String(strObj);

@@ -109,12 +109,12 @@ public class 倒水问题 {
 		
 		
 	}
-	
+
 	//----------------------------------------------------------------
-	
-	
-	
-	
+
+
+
+
 	//判断两数组值是否相等
 	public static boolean isequal(int[] a1 ,int[] a2){
 		if(a1.length!=a2.length)
@@ -126,7 +126,7 @@ public class 倒水问题 {
 		return true;
 	}
 
-	
+
 	//判断是否能倒水,不考虑是否存在以前倒过的情况
 	public static boolean canPour(int from, int to,Action action){
 		/*
@@ -158,7 +158,7 @@ public class 倒水问题 {
 			action.bucket[from]=0;
 		}
 	}
-	
+
 	//把action给tem
 	public static void copy(Action tem,Action action){
 		for (int i = 0; i < action.bucket.length; i++) {
@@ -174,7 +174,7 @@ public class 倒水问题 {
 	}
 	
 	
-	
+
 }
 
 

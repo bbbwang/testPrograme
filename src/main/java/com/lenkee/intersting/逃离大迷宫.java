@@ -9,22 +9,30 @@ import java.util.Stack;
  */
 public class 逃离大迷宫 {
     /**
-     * 在一个 10^6 x 10^6 的网格中，每个网格块的坐标为 (x, y)，其中 0 <= x, y < 10^6。
-     我们从源方格 source 开始出发，意图赶往目标方格 target。每次移动，我们都可以走到网格中在四个方向上相邻的方格，只要该方格不在给出的封锁列表 blocked 上。
-     只有在可以通过一系列的移动到达目标方格时才返回 true。否则，返回 false。
-
-     来源：力扣（LeetCode）
-     链接：https://leetcode-cn.com/problems/escape-a-large-maze
+     * 在一个 10^6 x 10^6 的网格中，每个网格块的坐标为 (x, y)，其中 0 <= x, y < 10^6。
+     我们从源方格 source 开始出发，意图赶往目标方格 target。每次移动，我们都可以走到网格中在四个方向上相邻的方格，只要该方格不在给出的封锁列表 blocked 上。
+     只有在可以通过一系列的移动到达目标方格时才返回 true。否则，返回 false。
      */
-
+    // 记录行走路径
+    public static Stack<int[]> trace = new Stack<>();
+    // 设置棋盘大小6x6
+    public  static int scope = 6;
     public static void main(String[] args) {
-        int[][] blocked = {{10,9},{9,10},{10,11},{11,10}};
-
+        // 设置棋盘阵型
+        int[][] blocked = {{3,2},{4,2},{5,3},{4,4},{2,5}};
+        // 起点
         int[] source = new int[]{0,0};
-        int[] target = new int[]{10,10};
-
+        //终点
+        int[] target = new int[]{5,5};
         System.out.println("^ v ^");
-        System.out.println(isEscapePossible(blocked, source, target) );
+        // 判断是否走得通
+        boolean escapePossible = isEscapePossible(blocked, source, target);
+        System.out.println( escapePossible);
+        if (escapePossible){
+            trace.stream().forEach(t->{
+                System.out.print("{"+t[0]+","+t[1]+"}-->");
+            });
+        }
 
     }
 
@@ -39,15 +47,15 @@ public class 逃离大迷宫 {
         }
         return graph;
     }
-
+    // 判断是否超出范围
     public static boolean outOfScope(int x, int y,Map<String, Integer> graph){
-        int scope = 1000000;
         return x>=0 && y>=0 && x<scope && y<scope && getGraph(graph,x+""+y)==0;
     }
 
     public static boolean isEscapePossible(int[][] blocked, int[] source, int[] target){
-        Stack<int[]> trace = new Stack<>();
+//        Stack<int[]> trace = new Stack<>();
         Stack<int[]> trace2 = new Stack<>();
+        // 正向和逆向，都走一遍
         return isEscapePossible2(blocked, source, target, trace) && isEscapePossible2(blocked, target, source, trace2);
     }
 
@@ -58,11 +66,8 @@ public class 逃离大迷宫 {
         while (true){
             int x = source[0];
             int y = source[1];
-//            System.out.print(x+" "+y+"-->");
             // 出口
             if (x == target[0] && y==target[1]){
-                System.out.println();
-                System.out.println();
                 return true;
             }
             if (trace != null && trace.size() > 19900)
@@ -96,9 +101,7 @@ public class 逃离大迷宫 {
             if (trace.size() ==0 && source == null){
                 return false;
             }
-
         }
-
     }
 
     // 如果能走，则走到下一步，返回true，否则返回false
