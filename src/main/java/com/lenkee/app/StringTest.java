@@ -1,6 +1,5 @@
 package com.lenkee.app;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -15,56 +14,34 @@ import static java.util.Arrays.asList;
  */
 public class StringTest {
     private int[] vals = {1,2,3,4,5};
-    public static void main(String[] args) throws IOException {
-
-//        List<Map<String,String>>  list = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            Map<String,String> map = new HashedMap();
-//            Map<String,String> map2 = new HashedMap();
-//            map.put("assignee","assignee"+Math.random());
-//            map2.put("assignee","");
-//            list.add(map);
-//            list.add(map2);
-//        }
-//        List<Map<String,String>> start = list.stream().filter(m -> {
-//            Map<String, String> m1 = (Map<String, String>) m;
-//            return !"".equals(m1.get("assignee"));
-//        }).collect(Collectors.toList());
-//        List<Map<String,String>> end = list.stream().filter(m -> {
-//            Map<String, String> m1 = (Map<String, String>) m;
-//            return !"".equals(m1.get("assignee"));
-//        }).collect(Collectors.toList());
-//        sortMap(start);
-//        dida();
-        String str = "Issue:\n" +
-                "Change string for AU - Remove date format\n" +
-                "\n" +
-                "Source:\n" +
-                "Seller Registration Date (MMM dd, yyyy)\n" +
-                "\n" +
-                "Actual:\n" +
-                "Seller registration date (MMM dd, yyyy)\n" +
-                "\n" +
-                "Expected result:\n" +
-                "Seller registration date\n" +
-                "\n" +
-                "SID:\n" +
-                "sarrptbat.report_builder.registrationInfo.sellerRegDate\n" +
-                "\n" +
-                "File:\n" +
-                "/L10N/Raptor/source/en/request77492/LPP-P-53515.LVE-JG-63763/content/v4contentsource/source/en/sarrptbat/report_builder.4cb\n" +
-                "\n" +
-                "L10NHub ID:53515\n" +
-                "\n" +
-                "File path:53515: https://github.corp.ebay.com/ACCOUNT-SETTINGS/sarrptbat/tree/report_builder_ccpa/content/v4contentsource/source/en/sarrptbat/report_builder.properties\n" +
-                "\n" +
-                "Step ID:3\n" +
-                "Reported by Stacey, Isabel(AWF)\n" +
-                "LQA Review Page";
-        System.out.println(getFilePath(str));
-
-
+    public static void main(String[] args) {
+        String summary = "LLT-38470 Android 5.41.0 Diagnostics";
+        System.out.println(getSummaryTicket(summary));
     }
+
+    private static void dealSearchData(String str){
+        String key = str.substring(0,str.lastIndexOf("["));
+        String num = str.substring(str.lastIndexOf(".")+1,str.length()-1);
+        System.out.println(key+":"+num);
+    }
+
+    private static String getSummaryTicket(String summary){
+
+        String head = "LLT-";
+        StringBuffer ticket = new StringBuffer();
+        if (summary.startsWith(head)){
+            for (int i = head.length(); i < summary.length(); i++) {
+                char c = summary.charAt(i);
+                if (Character.isDigit(c)){
+                    ticket.append(c);
+                }else {
+                    return ticket.toString();
+                }
+            }
+        }
+        return head + ticket.toString();
+    }
+
 
     public static String getFilePath(String description){
         try {
@@ -239,29 +216,7 @@ public class StringTest {
     }
 
 
-    public static void modify(String s){
-        s += "world";
-    }
 
-    public static int fun(int n){
-        if(n ==1){
-            return 1;
-        }
-        return fun(n-1)*n;
-    }
-
-    public static void multiplicationTable(){
-        for(int i=9;i>0;i--) {
-            for(int j=i;j>0;j--) {
-                System.out.print(j+"×"+i+"="+i*j+"\t");// \t 跳到下一个TAB位置
-            }
-            System.out.println();
-        }
-    }
-
-    public static String cutString(String str){
-        return "Some of the tickets do not exist. Please check it: "+str.substring(str.lastIndexOf(" Wrong ticket(s): "));
-    }
 
     public static void countWord(String str){
         Map<String, Integer> map = new HashMap<>();
@@ -321,39 +276,18 @@ public class StringTest {
         });
     }
 
-    public static void dida(){
-        String str = "-... -.- -.-. - ..-. -- .. ... -.-.";
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < str.length(); i++) {
-            if (str.substring(i,i+1).equals("-")){
-                sb.append("1");
-            }else
-            if (str.substring(i,i+1).equals(".")){
-                sb.append("0");
-            }else {
-                sb.append(str.substring(i,i+1));
-            }
+    // 正则匹配
+    private static String regx(String str){
+        Pattern PLURALS_KEY = Pattern.compile("<plurals name=\"([a-z0-9_-]+)\"");
+        Matcher matcherKey = PLURALS_KEY.matcher(str);
+        if (matcherKey.find()) {
+            return matcherKey.group(1);
         }
-        System.out.println(sb.toString());
-    }
-
-    public static void fuun(){
-        String str= "wng,qiang,helo,nihao";
-        String[] split = str.split(",");
-        for (int i = 0; i < split.length; i++) {
-            System.out.println(split[i]);
-        }
-    }
-
-    public static void operate(String x, String y){
-        y+=x;
-        y=x;
+        System.out.println("not find");
+        return null;
     }
 
 
-}
-abstract class abstractIt{
-    abstract float getFload();
 }
 
 
